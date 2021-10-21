@@ -6,7 +6,7 @@ import { dbCreds } from '../config.ts'
 const client = new Client(dbCreds)
 
 
-const getProducts = async ({ response }: { response: any }) => {
+const index = async ({ response }: { response: any }) => {
     try {
         await client.connect()
 
@@ -40,7 +40,7 @@ const getProducts = async ({ response }: { response: any }) => {
 }
 
 
-const getProduct = async ({ params, response }: { params: { id: string }, response: any }) => {
+const show = async ({ params, response }: { params: { id: string }, response: any }) => {
     try {
         await client.connect()
 
@@ -79,7 +79,7 @@ const getProduct = async ({ params, response }: { params: { id: string }, respon
 }
 
 
-const addProduct = async ({ request, response }: { request: any, response: any }) => {    
+const create = async ({ request, response }: { request: any, response: any }) => {
     const body = await request.body()
     const product = body.value 
 
@@ -116,7 +116,7 @@ const addProduct = async ({ request, response }: { request: any, response: any }
 }
 
 
-const updateProduct = async({ params, request, response }: { params: { id: string }, request: any, response: any }) => {
+const update = async({ params, request, response }: { params: { id: string }, request: any, response: any }) => {
     await getProduct({ params: { "id": params.id }, response })
 
     if(response.status === 404) {
@@ -165,7 +165,7 @@ const updateProduct = async({ params, request, response }: { params: { id: strin
 }
 
 
-const deleteProduct = async ({ params, response }: { params: { id: string }, response: any }) => {
+const destroy = async ({ params, response }: { params: { id: string }, response: any }) => {
     await getProduct({ params: { "id": params.id }, response })
 
     if(response.status === 404) {
@@ -198,4 +198,4 @@ const deleteProduct = async ({ params, response }: { params: { id: string }, res
     }
 }
 
-export { getProducts, getProduct, addProduct, updateProduct, deleteProduct }
+export { index, show, create, update, destroy }
